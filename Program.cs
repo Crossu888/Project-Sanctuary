@@ -22,6 +22,7 @@ public class Save
                 Read.Start();
                 break;
             case "2":
+                Write.Basic();
                 break;
             default:
                 Console.WriteLine("ERROR: Invalid input");

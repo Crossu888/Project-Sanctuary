@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "MJm5ZXOn4kE=",
+  "dgSpecHash": "OKyFDYA82gQ=",
   "success": true,
-  "projectFilePath": "/home/emily/Documents/ProjectSanctuary/ProjectSanctuary.csproj",
+  "projectFilePath": "/home/emily/Documents/Project-Sanctuary/ProjectSanctuary.csproj",
   "expectedPackageFiles": [
-    "/home/emily/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.4/microsoft.aspnetcore.app.ref.9.0.4.nupkg.sha512"
+    "/home/emily/.nuget/packages/microsoft.netcore.app.runtime.win-x64/9.0.4/microsoft.netcore.app.runtime.win-x64.9.0.4.nupkg.sha512",
+    "/home/emily/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.4/microsoft.aspnetcore.app.ref.9.0.4.nupkg.sha512",
+    "/home/emily/.nuget/packages/microsoft.aspnetcore.app.runtime.win-x64/9.0.4/microsoft.aspnetcore.app.runtime.win-x64.9.0.4.nupkg.sha512",
+    "/home/emily/.nuget/packages/microsoft.netcore.app.host.win-x64/9.0.4/microsoft.netcore.app.host.win-x64.9.0.4.nupkg.sha512"
   ],
   "logs": []
 }
