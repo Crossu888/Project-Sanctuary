@@ -1,0 +1,17 @@
+B5 = 181 // pokedex number
+2E = 46 // pokemon level
+56 C9 7A FF // personality value
+46 B7 AA 0F // OT ID and secret ID
+2E-01-5D-01-4F-01-49-01-DE-01-38-01-59-01-4F-01-49-01-51-01-FF-FF = Dyke Nukem // pokemon nickname
+36-01-59-01-47-01-5D-01-FF-FF-00-00-00-00-00-00 = Lucy // Original Trainer name
+0C 01 57 00 46 00 56 // moveset
+
+one pokemon record - 60 bytes
+hall of fame record - 364 bytes
+19 00 02 19 // end of hall of fame record - date
+19 00 03 12
+19 00 03 14
+K spotted at 0xF620 // footer??
+23 06 06 20
+small block checksum at 0xF626
+7B 8E
