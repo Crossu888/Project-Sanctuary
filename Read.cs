@@ -90,46 +90,10 @@ public class Read
             Console.WriteLine(BitConverter.ToUInt32(b4, 0));
             //Gender
             fs.ReadExactly(b1);
-            Console.Write("Gender: ");
-            switch (b1[0])
-            {
-                case 0x00:
-                    Console.WriteLine("Male");
-                    break;
-                case 0x01:
-                    Console.WriteLine("Female");
-                    break;
-                default:
-                    Console.WriteLine("ERROR: Gender not binary");
-                    break;
-            }
+            Console.Write("Gender: " + (Gender)b1[0]);
             //Country
             fs.ReadExactly(b1);
-            Console.Write("Country of Origin: ");
-            switch (b1[0])
-            {
-                case 0x01:
-                    Console.WriteLine("Japan");
-                    break;
-                case 0x02:
-                    Console.WriteLine("English");
-                    break;
-                case 0x03:
-                    Console.WriteLine("France");
-                    break;
-                case 0x04:
-                    Console.WriteLine("Italy");
-                    break;
-                case 0x05:
-                    Console.WriteLine("Germany");
-                    break;
-                case 0x07:
-                    Console.WriteLine("Spain");
-                    break;
-                case 0x08:
-                    Console.WriteLine("South Korea");
-                    break;
-            }
+            Console.WriteLine("Country of Origin: " + (Region)b1[0]);
             //Trainer Class
             fs.Seek(0x7F, SeekOrigin.Begin);
             fs.ReadExactly(b1);
@@ -192,11 +156,96 @@ public class Read
         }
     }
 
+    public static void Party()
+    {
+        using (FileStream fs = File.OpenRead(Save.path))
+        {
+            fs.Seek(0x98 + (236 * 0), SeekOrigin.Begin);
+            byte[] data = new byte[136];
+            fs.ReadExactly(data);
+            data = Util.DecryptPKM(data);
+            PKM party1 = Util.Gen4ToPKM(data);
+            Console.WriteLine("Species: " + party1.dexNum);
+            Console.WriteLine("Personality: " + Convert.ToString(party1.pv, 16));
+            Console.WriteLine("Held item: " + party1.HeldItem);
+            Console.WriteLine("OTID: " + party1.otid);
+            Console.WriteLine("OTSID: " + party1.otsid);
+            Console.WriteLine("EXP: " + party1.exp);
+            Console.WriteLine("Friendship: " + party1.friendship);
+            Console.WriteLine("Ability: " + party1.ability);
+            Console.WriteLine("Nature: " + party1.nature);
+            Console.WriteLine("markings: " + party1.marks);
+            Console.WriteLine("Original region: " + party1.ogRegion);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("HP EV: " + party1.hpEV);
+            Console.WriteLine("Attack EV: " + party1.attackEV);
+            Console.WriteLine("Defense EV: " + party1.defenseEV);
+            Console.WriteLine("Speed EV: " + party1.speedEV);
+            Console.WriteLine("Special attack EV: " + party1.spAttackEV);
+            Console.WriteLine("Special defense EV: " + party1.spDefenseEV);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Cool CV: " + party1.coolCV);
+            Console.WriteLine("Beauty CV: " + party1.beautyCV);
+            Console.WriteLine("Cute CV: " + party1.cuteCV);
+            Console.WriteLine("Smart CV: " + party1.smartCV);
+            Console.WriteLine("Tough CV: " + party1.toughCV);
+            Console.WriteLine("Sheen CV: " + party1.sheenCV);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Move 1: " + party1.move1);
+            Console.WriteLine("Move 2: " + party1.move2);
+            Console.WriteLine("Move 3: " + party1.move3);
+            Console.WriteLine("Move 4: " + party1.move4);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Move 1 PP: " + party1.move1pp);
+            Console.WriteLine("Move 2 PP: " + party1.move2pp);
+            Console.WriteLine("Move 3 PP: " + party1.move3pp);
+            Console.WriteLine("Move 4 PP: " + party1.move4pp);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Move PP Ups (?): " + Convert.ToString(party1.PPUP, 2));
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("HP IV: " + party1.hpIV);
+            Console.WriteLine("Attack IV: " + party1.attackIV);
+            Console.WriteLine("Defense IV: " + party1.defenseIV);
+            Console.WriteLine("Speed IV: " + party1.speedIV);
+            Console.WriteLine("Special attack IV: " + party1.spAttackIV);
+            Console.WriteLine("Special defense IV: " + party1.spDefenseIV);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Fateful Encounter?: " + party1.fateful);
+            Console.WriteLine("Gender: " + party1.gender);
+            Console.WriteLine("Alternate forms?: " + Convert.ToString(party1.altForms, 2));
+            Console.WriteLine("Shiny Leaves: " + Convert.ToString(party1.sLeaves, 2));
+            Console.WriteLine("Is Egg?: " + party1.isEgg);
+            Console.WriteLine("Is Nicknamed?: " + party1.isNicknamed);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Nickname: " + party1.nickname);
+            Console.WriteLine("OT name: " + party1.otName);
+            Console.WriteLine("OT gender: " + party1.otGender);
+            Console.WriteLine("Original game: " + party1.ogGame);
+            Console.WriteLine("Egg location: " + party1.eggLocation);
+            Console.WriteLine("Date egg received: " + party1.eggDate);
+            Console.WriteLine("Met location: " + party1.metLocation);
+            Console.WriteLine("Met date: " + party1.metDate);
+            Console.WriteLine("Met level: " + party1.metLevel);
+            Console.WriteLine("Pokerus: " + Convert.ToString(party1.pokerus, 2));
+            Console.WriteLine("Poke ball: " + party1.pokeball + " Ball");
+            Console.WriteLine("Encounter type: " + party1.encounterType);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Sinnoh Ribbon Set: " + Convert.ToString((long)(party1.ribbonsSinnoh1), 2));
+            Console.WriteLine("Hoeen Ribbon Set: " + Convert.ToString(party1.ribbonsHoeen1, 2));
+            Console.WriteLine("-----------------------");
+            /*Console.WriteLine(BitConverter.ToString(data));
+            Console.WriteLine("-----------------------");
+            Console.WriteLine(BitConverter.ToString(Util.PKMToGen4(party1)));
+            Console.WriteLine(BitConverter.ToString(data) == BitConverter.ToString(Util.PKMToGen4(party1)));*/
+        }
+    }
+
     public static void Start()
     {
         Console.WriteLine("Select option:");
         Console.WriteLine("1) Basic save info");
         Console.WriteLine("2) Hall of Fame");
+        Console.WriteLine("3) Party Pokemon");
         switch (Console.ReadLine())
         {
             case "1":
@@ -204,6 +253,9 @@ public class Read
                 break;
             case "2":
                 HallOfFameRecords();
+                break;
+            case "3":
+                Party();
                 break;
             default:
                 Console.WriteLine("ERROR: Invalid input");

@@ -1,6 +1,6 @@
 public class Save
 {
-    public const string path = "SoulSilver.sav";
+    public const string path = "EmilySilver.sav";
     public const int footerSize = 0x10;
     public const int smallBlockSize = 0xF628;
     public const int bigBlockSize = 0x12310;
@@ -22,7 +22,7 @@ public class Save
                 Read.Start();
                 break;
             case "2":
-                Write.Basic();
+                Write.Start();
                 break;
             default:
                 Console.WriteLine("ERROR: Invalid input");

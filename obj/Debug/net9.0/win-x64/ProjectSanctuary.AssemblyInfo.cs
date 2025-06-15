@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjectSanctuary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf0d088a559c2a3d70a9290d930e1eab2883b6bc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+80bf820179ad335c8af54789db16daa4fa39952d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjectSanctuary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjectSanctuary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

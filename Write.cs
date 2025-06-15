@@ -29,7 +29,7 @@ public class Write
                 }
                 else
                 {
-                    Replace(0x64, Util.TextToGen4(name));
+                    Replace(0x64, Util.TextToGen4(name, 16));
                     Util.ChecksumSmallBlock();
                 }
                 break;
@@ -188,8 +188,110 @@ public class Write
         }
     }
 
+    public static void Party()
+    {
+        Console.WriteLine("Select pokemon (1-6)");
+        byte partyNum = (byte)(Byte.Parse(Console.ReadLine()!) - 1);
+        PKM party1 = new PKM();
+        using (FileStream fs = File.OpenRead(Save.path))
+        {
+            fs.Seek(0x98 + (236 * partyNum), SeekOrigin.Begin);
+            byte[] data = new byte[136];
+            fs.ReadExactly(data);
+            data = Util.DecryptPKM(data);
+            party1 = Util.Gen4ToPKM(data);
+        }
+        Console.WriteLine("Select option: ");
+        Console.WriteLine("1) Species");
+        Console.WriteLine("2) Nickname");
+        Console.WriteLine("3) Item");
+        Console.WriteLine("4) Friendship");
+        Console.WriteLine("5) Ability");
+        switch (Console.ReadLine())
+        {
+            case "1":
+                Console.WriteLine("Enter new value [1-495]");
+                uint newDex = UInt32.Parse(Console.ReadLine()!);
+                if (newDex >= 0 && newDex <= 495)
+                    party1.dexNum = (Species)newDex;
+                else
+                {
+                    Console.WriteLine("ERROR: Invalid input");
+                    return;
+                }
+                break;
+            case "2":
+                Console.WriteLine("Enter new value [max 11 characters]");
+                string name = Console.ReadLine()!;
+                if (name.Length > 11 || name.Length == 0)
+                {
+                    Console.WriteLine("ERROR: Invalid input");
+                    return;
+                }
+                else
+                {
+                    party1.nickname = name;
+                    party1.isNicknamed = true;
+                }
+                break;
+            case "3":
+                Console.WriteLine("Enter new value [1-536]");
+                ushort newItem = UInt16.Parse(Console.ReadLine()!);
+                if (newItem >= 0 && newItem <= 495)
+                    party1.HeldItem = newItem;
+                else
+                {
+                    Console.WriteLine("ERROR: Invalid input");
+                    return;
+                }
+                break;
+            case "4":
+                Console.WriteLine("Enter new value [0-255]");
+                byte fs = Byte.Parse(Console.ReadLine()!);
+                if (fs >= 0 && fs <= 255)
+                    party1.friendship = fs;
+                else
+                {
+                    Console.WriteLine("ERROR: Invalid input");
+                    return;
+                }
+                break;
+            case "5":
+                Console.WriteLine("Enter new value [0-310]");
+                ushort newAbility = UInt16.Parse(Console.ReadLine()!);
+                if (newAbility >= 0 && newAbility <= 310)
+                    party1.ability = (Ability)newAbility;
+                else
+                {
+                    Console.WriteLine("ERROR: Invalid input");
+                    return;
+                }
+                break;
+            default:
+                break;
+        }
+        byte[] ndata = Util.PKMToGen4(party1);
+        ndata = Util.EncryptPKM(ndata);
+        Replace(0x98 + (236 * partyNum), ndata);
+        Util.ChecksumSmallBlock();
+        Console.WriteLine("SUCCESS!");
+    }
+
     public static void Start()
     {
         Console.WriteLine("Select option:");
+        Console.WriteLine("1) Basic");
+        Console.WriteLine("2) Party pokemon");
+        switch (Console.ReadLine())
+        {
+            case "1":
+                Basic();
+                break;
+            case "2":
+                Party();
+                break;
+            default:
+                break;
+        }
     }
 }
